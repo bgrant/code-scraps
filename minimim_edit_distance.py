@@ -1,5 +1,8 @@
 """
-Minimum Edit Distance, adapted from an example in java by Adnan Aziz.
+Minimum Edit Distance, , a.k.a. Levenshtein distance between two
+strings.  
+
+Adapted from an example in Java by Adnan Aziz.
 
 :author: Robert David Grant <robert.david.grant@gmail.com>
 
@@ -19,20 +22,17 @@ Minimum Edit Distance, adapted from an example in java by Adnan Aziz.
     permissions and limitations under the License.
 """
 
-class MED:
+def med(s1, s2):
+    """Compute minimum edit distance between `s1` and `s2`.
 
-    def __init__(self):
-        self.cache = []
-
-    def init_cache(self, N, M):
-        self.cache = []
-        for i in range(N):
-            self.cache.append([-1] * M)
-
-    def d(self, s1, s2):
-
-        if self.cache[len(s1)][len(s2)] != -1:
-            return self.cache[len(s1)][len(s2)]
+    In other words, how many single-character insertions, deletions, or
+    substitutions does it take to get from one string to the other?
+    Dynamic programming solution.  See `Levenshtein Distance
+    <https://en.wikipedia.org/wiki/Levenshtein_distance>`_.
+    """
+    def d(s1, s2):
+        if cache[len(s1)][len(s2)] != -1:
+            return cache[len(s1)][len(s2)]
 
         # Both strings are empty or 1 is
         # d('', '') == 0 
@@ -41,31 +41,36 @@ class MED:
             result = max(len(s1), len(s2))
         # Last characters don't match
         elif s1[-1] == s2[-1]:
-            result = min( self.d(s1[0:-1], s2[0:-1]),# match characters
-                          self.d(s1, s2[0:-1]) + 1 ) # insert s2[-1]
+            result = min( d(s1[0:-1], s2[0:-1]),# match characters
+                          d(s1, s2[0:-1]) + 1 ) # insert s2[-1]
         # Last characters match
         else:
-            result = min( self.d(s1[0:-1], s2) + 2,  # delete last and insert
-                          self.d(s1, s2[0:-1]) + 1 ) # just insert s2[-1]
+            result = min( d(s1[0:-1], s2) + 2,  # delete last and insert
+                          d(s1, s2[0:-1]) + 1 ) # just insert s2[-1]
 
-        self.cache[len(s1)][len(s2)] = result
+        cache[len(s1)][len(s2)] = result
         return result
 
-    def test(self, s1, s2, expected):
-        self.init_cache(len(s1) + 1, len(s2) + 1)
-        success = 'PASSED' if (self.d(s1, s2) == expected) else 'FAILED'
-        print success + ": d('" + s1 + "', '" + s2 + "')"
+    cache = []
+    for i in range(len(s1)+1):
+        cache.append([-1] * (len(s2)+1))
+
+    return d(s1, s2)
 
 
-if __name__ == '__main__':
-    m = MED()
-    m.test("abc", "abc", 0)
-    m.test("abc", "bcd", 2)
-    m.test("abcdefg", "abcdefg", 0)
-    m.test("abcdefg", "", 7)
-    m.test("abcdefg", "ABCDEFG", 14)
-    m.test("abcdefg", "abcdefgABCDEFG", 7)
-    m.test("", "", 0)
-    m.test("a", "A", 2)
-    m.test("a", "ab", 1)
-    m.test("abc", "c", 2)
+def test_med(s1, s2, expected):
+    success = 'PASSED' if (med(s1, s2) == expected) else 'FAILED'
+    print success + ": med('" + s1 + "', '" + s2 + "')"
+
+
+def run_tests():
+    test_med("abc", "abc", 0)
+    test_med("abc", "bcd", 2)
+    test_med("abcdefg", "abcdefg", 0)
+    test_med("abcdefg", "", 7)
+    test_med("abcdefg", "ABCDEFG", 14)
+    test_med("abcdefg", "abcdefgABCDEFG", 7)
+    test_med("", "", 0)
+    test_med("a", "A", 2)
+    test_med("a", "ab", 1)
+    test_med("abc", "c", 2)
