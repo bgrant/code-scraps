@@ -1,3 +1,22 @@
+;; Structure and Interpretation of Computer Programs - Chapter 1
+;;
+;; :author: Robert David Grant <robert.david.grant@gmail.edu>
+;;
+;; :copyright:
+;;   Copyright 2011 Robert David Grant
+;;
+;;   Licensed under the Apache License, Version 2.0 (the "License"); you
+;;   may not use this file except in compliance with the License.  You
+;;   may obtain a copy of the License at
+;;
+;;      http://www.apache.org/licenses/LICENSE-2.0
+;;
+;;   Unless required by applicable law or agreed to in writing, software
+;;   distributed under the License is distributed on an "AS IS" BASIS,
+;;   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+;;   implied.  See the License for the specific language governing
+;;   permissions and limitations under the License.
+
 ;; fahrenheit to celsius converter
 (define (f2c t) 
   (* 5/9 (- t 32)))
@@ -32,7 +51,8 @@
 
 ;; Exercise 1.5
 ;; (test 0 (p))
-;; applicative order iterpreters run forever by running the infinitely recursive procedure
+;; applicative order iterpreters run forever by running the infinitely
+;; recursive procedure
 ;; normal order interpreters stop on realizing x = 0 and don't eval (p)
 (define (p) (p))
 (define (test x y)
@@ -55,9 +75,11 @@
   (sqrt-iter 1.0))
 
 ;; Exercise 1.6
-;; this new-if procedure is wrong---because of applicative order interpretation,
-;; if used in Newton's method above sqrt-iter (else-clause) is forever expanded, preventing substitution
-;; with the then-clause (it does work with simple cases that need no expansion of the else-clause)
+;; this new-if procedure is wrong---because of applicative order
+;; interpretation, if used in Newton's method above sqrt-iter
+;; (else-clause) is forever expanded, preventing substitution with the
+;; then-clause (it does work with simple cases that need no expansion of
+;; the else-clause)
 (define (new-if predicate then-clause else-clause)
   (cond (predicate then-clause)
         (else else-clause)))
