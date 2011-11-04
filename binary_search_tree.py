@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Playing with implementing data structures in python.
 
@@ -108,7 +107,7 @@ class BST:
                     subroot = subroot.left
 
 
-if __name__ == '__main__':
+def test_BST():
     root_node = TreeNode(value = 5)
     tree = BST(root_node)
 
