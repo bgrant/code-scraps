@@ -1,5 +1,5 @@
 """
-Playing with basic bayesian computations.
+Playing with basic Bayesian computations.
 
 :author: Robert David Grant <robert.david.grant@gmail.com>
 
