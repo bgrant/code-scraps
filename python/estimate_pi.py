@@ -1,6 +1,8 @@
 """
 estimate_pi.py: Estimate the value of pi using Monte Carlo.
 
+Inspired by a blog post at http://rebrained.com/.
+
 :author: Robert David Grant <robert.david.grant@gmail.com>
 
 :copyright: 
