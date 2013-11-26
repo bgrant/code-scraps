@@ -1,5 +1,5 @@
 """
-Minimum Edit Distance, , a.k.a. Levenshtein distance between two
+Minimum Edit Distance, a.k.a. Levenshtein distance between two
 strings.  
 
 Adapted from an example in Java by Adnan Aziz.
