@@ -20,11 +20,12 @@ Inspired by a blog post at http://rebrained.com/.
     implied.  See the License for the specific language governing
     permissions and limitations under the License.
 """
-from numpy import array
-from numpy.random import random_sample
+import multiprocessing as mp
+import numpy as np
+import numpy.random as npr
 
 
-def estimate_pi(r=10.0, n=1e6):
+def estimate_pi(n=1e6):
     """
     Compute the value of pi with Monte Carlo.
 
@@ -44,6 +45,18 @@ def estimate_pi(r=10.0, n=1e6):
 
     This probability is the same if only a quarter circle is considered.
     """
-    coords = array([random_sample(n), random_sample(n)]).T
+    npr.seed()
+    coords = np.array([npr.random_sample(n), npr.random_sample(n)]).T
     distances = (coords[:,0]**2 + coords[:,1]**2)**0.5
     return (distances < 1).mean() * 4
+
+
+if __name__ == '__main__':
+    nprocs = 4
+    pool = mp.Pool(processes=nprocs)
+    results = pool.map(estimate_pi, [1e6]*nprocs)
+    est = np.array(results).mean()
+
+    print "Results:", results
+    print "Estimate:", est
+    print "Error:", abs(np.pi - est)
